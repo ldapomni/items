@@ -27,9 +27,9 @@
 - Права доступа/роли
 - Конструктор форм ввода
 
+Видео работы:
+<video src='https://github.com/user-attachments/assets/7c22c44b-9c51-4aab-9b99-04e6a4a9d286' width=480/> |
 
-
-https://github.com/user-attachments/assets/7c22c44b-9c51-4aab-9b99-04e6a4a9d286
 
 
 
