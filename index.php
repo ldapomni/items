@@ -2,14 +2,15 @@
 
 require __DIR__ . "/itemsType.php";
 
-//TODO Validation
-//TODO Mask
-
 //роутинг
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
-//Перечень активов
+/**
+ * Получение списка форм
+ * @Rest\Get("/api/getFormTypes")
+ * @return string $html
+ */
 if ($method === 'GET' && $path === '/api/getFormTypes') {
 
     $html = '<select hx-get="/api/getForm" hx-target="#formContainer" name="getForm" class="form-select w-4">';
@@ -21,7 +22,13 @@ if ($method === 'GET' && $path === '/api/getFormTypes') {
     exit($html);
 };
 
-//Форма с данными или без
+/**
+ * Получение формы с данными или без
+ * @Rest\Get("/api/getForm")
+ * @param string $id Идентификатор записи
+ * @param string $formId Идентификатор формы
+ * @return string $form 
+ */
 if ($method === 'GET' && $path === '/api/getForm') {
     $id = $_GET['id'] ?? '';
     $formId = $_GET['getForm'] ?? '';
@@ -39,7 +46,11 @@ if ($method === 'GET' && $path === '/api/getForm') {
     exit($form);
 };
 
-//Запись данных из формы
+/**
+ * Запись данных из формы
+ * @Rest\Put("/api/saveRecord")
+ * @param string $id Идентификатор записи для обновления или создания
+ */
 if ($method === 'POST' && $path === '/api/saveRecord') {
     $data = getData();
     $id = $_POST['id'] ?? '';
@@ -53,7 +64,11 @@ if ($method === 'POST' && $path === '/api/saveRecord') {
     exit();
 };
 
-//Вывод всех данных или определенную по id
+/**
+ * Вывод всех записей или определенную по id
+ * @Rest\Get("/api/getRecord")
+ * @param string $id Идентификатор записи, либо вывод всего
+ */
 if ($method === 'GET' && $path === '/api/getRecord') {
     $id = $_GET['id'] ?? '';
     $data = getData();
@@ -73,7 +88,13 @@ if ($method === 'GET' && $path === '/api/getRecord') {
     exit($html);
 };
 
-//Удвление записи
+
+/**
+ *  Удаление записи
+ *  @Rest\Delete("/api/delRecord")
+ *  @param string $id Идентификатор записи
+ *  @return header
+ */
 if ($method === 'DELETE' && $path === '/api/delRecord') {
     $id = $_GET['id'] ?? '';
     $data = getData();
@@ -83,9 +104,17 @@ if ($method === 'DELETE' && $path === '/api/delRecord') {
     exit();
 };
 
-//Построение формы по описанию из itemsType
-function buildForm(&$itemsType, &$dict, $id, $record, $fill = false, $form = false)
-{
+/**
+ * Построение формы по описанию из itemsType
+ * @param $itemsType
+ * @param $dict  dictionary
+ * @param $id
+ * @param $record 
+ * @param boolean $fill fill form data from record 
+ * @param boolean $form view record as text or form  
+ * @return string $html 
+ */ 
+function buildForm(&$itemsType, &$dict, $id, $record, $fill = false, $form = false){
     $type = [];$header='';
     foreach ($itemsType as $items) {
         if ($items['id'] == $record['itemsType']) {
@@ -176,9 +205,12 @@ function buildForm(&$itemsType, &$dict, $id, $record, $fill = false, $form = fal
     $felement .= "</div></div></div></div>";
     return $felement;
 }
-//Чтение данных
-function getData()
-{
+
+/**
+ * Чтение данных
+ * @return array $data
+ */ 
+function getData(){
     $data = [];
     if (file_exists(__DIR__ . "/data.json")) {
         $all = file_get_contents(__DIR__ . "/data.json");
@@ -187,8 +219,10 @@ function getData()
     return $data;
 };
 
-//Запись данных
-function putData($data)
-{
+/**
+ * Запись данных
+ * @param array $data
+ */ 
+function putData($data){
     file_put_contents(__DIR__ . '/data.json', json_encode($data));
 };
