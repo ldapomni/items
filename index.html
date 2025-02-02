@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="LDA">
+    <title>Items</title>
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+        <div class="container">
+                <div class="row">
+                   <div class="col-12">
+                      <h5>Активы</h5><hr>
+                   </div>
+                <div>
+                <div class="row mb-3 mt-3">
+                        <div class="col-2 offset-9">
+                        <button class="btn btn-primary" 
+                            hx-get="/api/getFormTypes" 
+                            hx-target="#formContainer" 
+                            hx-swap="innerHTML">
+                            Добавить актив
+                        </button>
+                </div>
+                <div class="row mb-1 mt-1">
+                        <div class="col-12">
+                                <div id="formContainer"></div>
+                        </div>
+                </div>
+                <div class="row mb-1 mt-1">
+                        <div class="col-12">
+                                <div id="items"
+                                     hx-get="/api/getRecord" 
+                                     hx-trigger="load, recordUpdate from:body"
+                                     hx-swap="innerHTML">
+                                </div>
+                        </div>
+                </div>
+        <div>
+        <script src="bootstrap/bootstrap.min.js"></script>
+        <script src="htmx/htmx.min.js"></script>
+   </body>
+</html>
