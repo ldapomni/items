@@ -14,6 +14,13 @@
 - css - Bootstrap 5 
 - ajax - htmx
 
+API:
+- GET /api/getFormTypes
+- GET /api/getForm
+- POST /api/saveRecord
+- GET /api/getRecord
+- DELETE /api/delRecord
+
 Обработка ошибок - минимум, данные сохраняются в data.json
 Формы описываются в $itemTypes, словари в $dict
 
